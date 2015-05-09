@@ -70,6 +70,19 @@
             </div>
             <button type="button" ng-click="submit()">Submit</button>
         </form>
+
+        <div ng-show="showSocialMediaLinks">
+            Share on your favorite Social Media!
+            <table>
+                <tr ng-repeat="socialMedia in socialMediaLinks">
+                    <td>{{ socialMedia.shareCount }}</td>
+                    <td>
+                        <a href={{socialMedia.shareUrl}}><img src="/images/{{socialMedia.name}}.png"></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 </body>
 </html>

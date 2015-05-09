@@ -1,6 +1,6 @@
 var questionsAnswersApp = angular.module("questionsAnswersApp", []);
 
-questionsAnswersApp.controller("questionsAnswersController", function($scope, $http, $location ) {
+questionsAnswersApp.controller("questionsAnswersController", function($scope, $http ) {
     $scope.formData               = {};
     $scope.clientName             = clientName;
     $scope.campaignName           = campaignName;
@@ -13,6 +13,8 @@ questionsAnswersApp.controller("questionsAnswersController", function($scope, $h
     $scope.months                 = [1,2,3,4,5,6,7,8,9,10,11,12];
     $scope.link                   = '';
     $scope.hideQuestions          = false;
+    $scope.socialMediaLinks       = {};
+    $scope.showSocialMediaLinks   = false;
 
     for(j=0; j<=30; j++)
     {
@@ -32,7 +34,7 @@ questionsAnswersApp.controller("questionsAnswersController", function($scope, $h
 
     $http({
         method  : 'POST',
-        url     : 'http://app.ryes.io/getQuestionsAnswers',
+        url     : 'http://ryes.localhost/getQuestionsAnswers',
         data    : $.param({ clientName : $scope.clientName, campaignName: $scope.campaignName }),
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
     })
@@ -51,7 +53,7 @@ questionsAnswersApp.controller("questionsAnswersController", function($scope, $h
                 $scope.hideQuestions = true;
                 $scope.info = response.message;
             }
-    });
+        });
 
     $scope.submit = function(){
         $scope.formData.referred_by_code = window.location.href.toString().split("?ref=")[1];
@@ -61,19 +63,21 @@ questionsAnswersApp.controller("questionsAnswersController", function($scope, $h
         $scope.info = '';
         $http({
             method  : 'POST',
-            url     : 'http://app.ryes.io/addSubscriber',
+            url     : 'http://ryes.localhost/addSubscriber',
             data    : $.param($scope.formData),
             headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
         })
-        .success(function(response) {
-            if(response.success == 'success')
-            {
-                $scope.link = response.data.link;
-            }
-            else
-            {
-                $scope.info = response.message;
-            }
-        });
-    }
+            .success(function(response) {
+                if(response.success == 'success')
+                {
+                    $scope.socialMediaLinks = response.data.links;
+                    $scope.showSocialMediaLinks = true;
+                }
+                else
+                {
+                    $scope.info = response.message;
+                }
+            });
+    };
+
 });
