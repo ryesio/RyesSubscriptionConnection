@@ -34,7 +34,7 @@ questionsAnswersApp.controller("questionsAnswersController", function($scope, $h
 
     $http({
         method  : 'POST',
-        url     : 'http://ryes.localhost/getQuestionsAnswers',
+        url     : 'http://app.ryes.io/getQuestionsAnswers',
         data    : $.param({ clientName : $scope.clientName, campaignName: $scope.campaignName }),
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
     })
@@ -63,7 +63,7 @@ questionsAnswersApp.controller("questionsAnswersController", function($scope, $h
         $scope.info = '';
         $http({
             method  : 'POST',
-            url     : 'http://ryes.localhost/addSubscriber',
+            url     : 'http://app.ryes.io/addSubscriber',
             data    : $.param($scope.formData),
             headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
         })
