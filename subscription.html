@@ -12,10 +12,10 @@
     <div ng-controller="questionsAnswersController">
         <div ng-show="info"> {{info}}
         </div>
-        <div ng-show="link">Congratulations.  You've successful registered.  Copy the link and post on your social media!
-            <input id='socialMediaLink' type="text" value="{{link}}"></input>
+        <div ng-show="showSocialMediaLinks">Congratulations!  You've successfully registered.
+
         </div>
-        <form ng-submit="submit()" ng-hide="hideQuestions">
+        <form ng-submit="submit()" ng-hide="showSocialMediaLinks">
 
             <div>
                 First Name: <input id='firstName' type="text" ng-model="formData.first_name"></input>
@@ -74,10 +74,9 @@
         <div ng-show="showSocialMediaLinks">
             Share on your favorite Social Media!
             <table>
-                <tr ng-repeat="socialMedia in socialMediaLinks">
-                    <td>{{ socialMedia.shareCount }}</td>
-                    <td>
-                        <a href={{socialMedia.shareUrl}}><img src="/images/{{socialMedia.name}}.png"></a>
+                <tr>
+                    <td  ng-repeat="socialMedia in socialMediaLinks">
+                        <a target="_blank" href={{socialMedia.shareUrl}} ng-hide="socialMediaShared[socialMedia]"><img src="/images/{{socialMedia.name}}.png" ng-click="updateSocialMediaShare(socialMedia.name)"></a>
                     </td>
                 </tr>
             </table>
