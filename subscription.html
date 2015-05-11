@@ -6,17 +6,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     <script src="./js/questionsAnswersAngular.js"></script>
     <script src="./js/config.js"></script>
-    <meta itemprop="name" content="Subscription Page">
-    <meta itemprop="description" content="Sign up for this awesome Service">
-    <meta itemprop="image" content="http://app.ryes.io/128x128.png">
 </head>
 
 <body ng-app="questionsAnswersApp">
     <div ng-controller="questionsAnswersController">
+        <div ng-hide="showSocialMediaLinks">
+            Sign up here for exclusive access this product before anyone else. <br/>
+            Please fill out the fields and we will keep in touch with you as this product develops.
+        </div>
         <div ng-show="info"> {{info}}
         </div>
-        <div ng-show="showSocialMediaLinks">Congratulations!  You've successfully registered.
-
+        <div ng-show="showSocialMediaLinks">
+            Congratulations!  You've successfully registered.
         </div>
         <form id="questions" ng-submit="submit()" ng-hide="showSocialMediaLinks">
 
