@@ -1,4 +1,4 @@
-var questionsAnswersApp = angular.module("questionsAnswersApp", []);
+var questionsAnswersApp = angular.module("questionsAnswersApp", ['720kb.socialshare']);
 
 questionsAnswersApp.controller("questionsAnswersController", function($scope, $http ) {
     $scope.formData               = {};
@@ -13,11 +13,15 @@ questionsAnswersApp.controller("questionsAnswersController", function($scope, $h
     $scope.years                  = [];
     $scope.months                 = [1,2,3,4,5,6,7,8,9,10,11,12];
     $scope.hideQuestions          = false;
-    $scope.socialMediaLinks       = {};
+    $scope.socialMedias           = {};
     $scope.showSocialMediaLinks   = false;
     $scope.socialMediaShared      = {};
-    $scope.campaignId = '';
-    $scope.subscriberId = '';
+    $scope.link                   = '';
+    $scope.title                  = '';
+    $scope.text                   = '';
+    $scope.image                  = '';
+    $scope.campaignId             = '';
+    $scope.subscriberId           = '';
 
     for(j=0; j<=30; j++)
     {
@@ -37,7 +41,7 @@ questionsAnswersApp.controller("questionsAnswersController", function($scope, $h
 
     $http({
         method  : 'POST',
-        url     : 'http://app.ryes.io/getQuestionsAnswers',
+        url     : 'http://ryes.localhost/getQuestionsAnswers',
         data    : $.param({ clientName : $scope.clientName, campaignName: $scope.campaignName }),
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
     })
@@ -67,16 +71,21 @@ questionsAnswersApp.controller("questionsAnswersController", function($scope, $h
         $scope.email = $scope.formData.email;
         $http({
             method  : 'POST',
-            url     : 'http://app.ryes.io/addSubscriber',
+            url     : 'http://ryes.localhost/addSubscriber',
             data    : $.param($scope.formData),
             headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
         })
         .success(function(response) {
             if(response.success == 'success')
             {
+                $scope.link = response.data.link;
+                $scope.title = response.data.title;
+                $scope.text = response.data.text;
+                $scope.image = response.data.image;
+
                 $scope.hideQuestions = true;
                 $scope.showSocialMediaLinks = true;
-                $scope.socialMediaLinks = response.data.links;
+                $scope.socialMedias = response.data.socialMedia;
                 $scope.campaignId = response.data.campaignId;
                 $scope.subscriberId = response.data.subscriberId;
                 $scope.formData = {};
@@ -96,12 +105,13 @@ questionsAnswersApp.controller("questionsAnswersController", function($scope, $h
         console.log($scope.formDataSocialMedia);
         $http({
             method  : 'POST',
-            url     : 'http://app.ryes.io/addSocialMedia',
+            url     : 'http://ryes.localhost/addSocialMedia',
             data    : $.param($scope.formDataSocialMedia),
             headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
         })
         .success(function(response) {
 
         });
-    }
+    };
+
 });

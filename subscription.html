@@ -5,6 +5,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     <script src="./js/questionsAnswersAngular.js"></script>
+    <script src="./js/angular-socialshare.js"></script>
     <script src="./js/config.js"></script>
 </head>
 
@@ -76,11 +77,28 @@
         </form>
 
         <div ng-show="showSocialMediaLinks">
+            <br/>
             Share on your favorite Social Media!
-            <table>
+            <br/>
+            <table class="table">
                 <tr>
-                    <td  ng-repeat="socialMedia in socialMediaLinks">
-                        <a target="_blank" href={{socialMedia.shareUrl}} ng-hide="socialMediaShared[socialMedia]"><img src="/images/{{socialMedia.name}}.png" ng-click="updateSocialMediaShare(socialMedia.name)"></a>
+                    <td>
+                        Your personal referral link: <br />
+                        <input id='link' size="40" type="text" ng-model="link"></input> <br/>
+                        or <br/>
+                        Post to your accounts below:
+                    </td>
+                </tr>
+                <tr ng-repeat="socialMedia in socialMedias">
+                    <td>
+                        <a href="#"
+                           socialshare
+                           socialshare-provider="{{socialMedia}}"
+                           socialshare-text="{{text}}"
+                           socialshare-url="{{link}}"
+                           socialshare-media="{{image}}">
+                            <img src="/images/{{socialMedia}}.png" ng-click="updateSocialMediaShare(socialMedia)">
+                        </a>
                     </td>
                 </tr>
             </table>
